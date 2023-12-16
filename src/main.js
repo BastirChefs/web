@@ -10,9 +10,10 @@ import { firebaseApp } from '@/firebase'
 const app = createApp(App)
 
 app.use(createPinia())
-app.use(router)
 app.use(VueFire, {
   firebaseApp,
   modules: [VueFireAuth, VueFireFirestoreOptionsAPI]
 })
+app.use(router)
+
 app.mount('#app')
