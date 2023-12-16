@@ -1,9 +1,15 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+import { useCollection, useFirestore } from 'vuefire'
+import { collection } from 'firebase/firestore'
+const db = useFirestore()
+const ingredients = useCollection(collection(db, 'ingredients'))
 </script>
-
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <ul>
+    <li v-for="ingredient in ingredients" :key="ingredient.id">
+      <div>
+        {{ ingredient.name }}
+      </div>
+    </li>
+  </ul>
 </template>
