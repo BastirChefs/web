@@ -7,6 +7,9 @@ const ingredients = useCollection(collection(db, 'ingredients'))
 const editIngredient = (id) => {
     router.push({name: 'ingredients/edit', params: {id: id}})
 }
+const deleteIngredient = (id) => {
+    router.push({name: 'ingredients/delete', params: {id: id}})
+}
 </script>
 <template>
   <ul>
@@ -17,7 +20,7 @@ const editIngredient = (id) => {
         <button @click="editIngredient(ingredient.id)">
             Edit
         </button>
-        <button @click="deleteIngredient">
+        <button @click="deleteIngredient(ingredient.id)">
             Delete
         </button>
       

@@ -34,6 +34,12 @@ const router = createRouter({
       name: 'ingredients/edit',
       component: () => import('../views/IngredientsEditView.vue'),
       props: route => ({ id: route.params.id })
+    },
+    {
+      path: '/ingredients/delete/:id',
+      name: 'ingredients/delete',
+      component: () => import('../views/IngredientsDeleteView.vue'),
+      props: route => ({ id: route.params.id })
     }
   ]
 })
