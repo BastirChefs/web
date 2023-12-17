@@ -40,7 +40,24 @@ const router = createRouter({
       name: 'ingredients/delete',
       component: () => import('../views/IngredientsDeleteView.vue'),
       props: route => ({ id: route.params.id })
-    }
+    },
+    {
+      path: '/suggestedIngredients',
+      name: 'suggestedIngredients',
+      component: () => import('../views/SuggestedIngredientsView.vue')
+    },
+    {
+      path: '/suggestedIngredients/add/:id',
+      name: 'suggestedIngredients/add',
+      component: () => import('../views/SuggestedIngredientsAddView.vue'),
+      props: route => ({ id: route.params.id })
+    },
+    {
+      path: '/suggestedIngredients/remove/:id',
+      name: 'suggestedIngredients/remove',
+      component: () => import('../views/SuggestedIngredientsRemoveView.vue'),
+      props: route => ({ id: route.params.id })
+    },
   ]
 })
 
