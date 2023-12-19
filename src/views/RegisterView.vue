@@ -33,14 +33,58 @@ const registerWithGoogle = () => {
 }
 </script>
 <template>
-  <div class="login">
-    <h1>This is a register page</h1>
+  <div class="user-form-info">Register</div>
+
+  <div class="user-form">
+    <div class="user-input-container">
+      <label for="email">Email</label>
+      <input type="email" placeholder="Email" v-model="email" />
+    </div>
+    <div class="user-input-container">
+      <label for="password">Password</label>
+      <input type="password" placeholder="Password" v-model="password" />
+    </div>
+    <div class="user-buttons">
+      <button @click="register" class="user-button">Register</button>
+      <button @click="registerWithGoogle" class="user-button">Register with Google</button>
+    </div>
+    <div><RouterLink to="/login">Already have an account?</RouterLink></div>
   </div>
-  <label for="email">Email</label>
-  <input type="email" placeholder="Email" v-model="email" />
-  <label for="password">Password</label>
-  <input type="password" placeholder="Password" v-model="password" />
-  <button @click="register">Register</button>
-  <button @click="registerWithGoogle">Sign in with Google</button>
-  <RouterLink to="/login">Login</RouterLink>
 </template>
+
+<style>
+.user-form-info {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.user-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.user-input-container input {
+  width: 300px;
+  height: 30px;
+}
+
+.user-button {
+  height: 30px;
+  width: 300px;
+  text-align: center;
+}
+
+.user-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+</style>

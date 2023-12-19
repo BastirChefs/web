@@ -5,6 +5,7 @@ const db = useFirestore()
 const ingredients = useCollection(collection(db, 'ingredients'))
 </script>
 <template>
+  <RouterLink to="/logout">Log Out</RouterLink>
   <ul>
     <li v-for="ingredient in ingredients" :key="ingredient.id">
       <div>
