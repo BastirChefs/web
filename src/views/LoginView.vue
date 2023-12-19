@@ -33,7 +33,7 @@ const loginWithGoogle = () => {
 }
 </script>
 <template>
-  <div class="user-form-info">Register</div>
+  <div class="user-form-info">Login</div>
 
   <div class="user-form">
     <div class="user-input-container">
