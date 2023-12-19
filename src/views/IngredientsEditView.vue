@@ -40,6 +40,7 @@ const saveChanges = async () => {
             name: name.value,
             unit: unit.value
         });
+        router.push('/ingredients')
     } catch (error) {
         console.error("Error updating ingredient:", error);
     }
