@@ -1,16 +1,12 @@
 <script setup>
-import { useCollection, useFirestore } from 'vuefire'
-import { collection } from 'firebase/firestore'
-const db = useFirestore()
-const ingredients = useCollection(collection(db, 'ingredients'))
+import Navbar from '../components/Navbar.vue';
 </script>
 <template>
-  <RouterLink to="/logout">Log Out</RouterLink>
-  <ul>
-    <li v-for="ingredient in ingredients" :key="ingredient.id">
-      <div>
-        {{ ingredient.name }}
-      </div>
-    </li>
-  </ul>
+  <Navbar/>
+  <h1>
+    Welcome to the BastirChef Admin Panel!
+  </h1>
+  
+  You can read, edit and delete all the ingredients, ingredient suggestions, recipes and recipe reports.
+  
 </template>
