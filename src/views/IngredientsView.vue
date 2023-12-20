@@ -2,6 +2,7 @@
 import { useCollection, useFirestore } from 'vuefire'
 import { collection } from 'firebase/firestore'
 import router from '../router'
+import Navbar from '../components/Navbar.vue';
 const db = useFirestore()
 const ingredients = useCollection(collection(db, 'ingredients'))
 const editIngredient = (id) => {
@@ -12,6 +13,7 @@ const deleteIngredient = (id) => {
 }
 </script>
 <template>
+  <Navbar/>
   <ul>
     <li v-for="ingredient in ingredients" :key="ingredient.id">
         <div>
