@@ -77,6 +77,26 @@ const router = createRouter({
       props: route => ({ id: route.params.id }),
       meta: { requiresAuth: true }
     },
+    {
+      path: '/reportedRecipes',
+      name: 'reportedRecipes',
+      component: () => import('../views/ReportedRecipesView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/reportedRecipes/delete/:id',
+      name: 'reportedRecipes/delete',
+      component: () => import('../views/ReportedRecipesDeleteView.vue'),
+      props: route => ({ id: route.params.id }),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/reportedRecipes/remove/:id',
+      name: 'reportedRecipes/remove',
+      component: () => import('../views/ReportedRecipesRemoveView.vue'),
+      props: route => ({ id: route.params.id }),
+      meta: { requiresAuth: true }
+    },
   ]
 })
 

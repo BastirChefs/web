@@ -5,6 +5,7 @@
         <RouterLink to="/ingredients" class="nav-item">Ingredients</RouterLink>
         <RouterLink to="/suggestedIngredients" class="nav-item">Suggested Ingredients</RouterLink>
         <RouterLink to="/recipes" class="nav-item">Recipes</RouterLink>
+        <RouterLink to="/reportedRecipes" class="nav-item">Reported Recipes</RouterLink>
         <!-- Add more links as needed -->
   
         <!-- You can also include a login/logout button based on user authentication status -->
