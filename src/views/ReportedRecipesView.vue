@@ -3,8 +3,10 @@ import { useCollection, useFirestore } from 'vuefire'
 import { collection, doc, getDoc } from 'firebase/firestore'
 import router from '../router'
 import Navbar from '../components/Navbar.vue';
-import { ref, onMounted, watchEffect } from 'vue';
+import { ref, onMounted, onUnmounted, watchEffect } from 'vue';
+import { useStore } from 'vuex';
 
+const store = useStore();
 const db = useFirestore()
 const reportedRecipes = useCollection(collection(db, 'reported-recipes'))
 const recipesWithNames = ref([]);
@@ -44,14 +46,25 @@ const refreshData = async () => {
       recipesWithNames.value.push({ ...recipe, recipeName });
     }
   }));
+  store.commit('setDataLoaded', true);
+  console.log("set but true")
 }
 
-onMounted(() => {
-  refreshData();
+watchEffect(() => {
+    store.state.dataLoaded = false;
+})
+
+onMounted(async () => {
+    await new Promise(resolve => setTimeout(resolve, 100));
+    console.log("hello there")
+  if (!store.state.dataLoaded) {
+    refreshData();
+    console.log("mmm refress")
+  }
 });
 
-watchEffect(() => {
-  refreshData();
+onUnmounted(() => {
+    store.commit('setDataLoaded', false);
 });
 </script>
 

@@ -1,6 +1,6 @@
 <script setup>
 import { useFirestore } from 'vuefire'
-import { collection, getDoc, doc, deleteDoc } from 'firebase/firestore'
+import { collection, getDoc, doc, deleteDoc, query, where, getDocs } from 'firebase/firestore'
 import { ref, onMounted } from 'vue'
 import router from '../router'
 
@@ -32,6 +32,7 @@ const fetchRecipe = async () => {
 
 const deleteRecipe = async () => {
     try {
+        removeRecipeReport();
         const recipesCollection = collection(db, 'recipes');
         const recipesDoc = doc(recipesCollection, recipeId.value);
         await deleteDoc(recipesDoc);
@@ -39,6 +40,32 @@ const deleteRecipe = async () => {
         console.error("Error updating ingredient:", error);
     }
     router.go(-1)
+}
+
+const removeRecipeReport = async () => {
+    if (recipeId.value !== null) {
+        try {
+            const reportedRecipesCollection = collection(db, 'reported-recipes');
+            const q = query(reportedRecipesCollection, where('recipeId', '==', recipeId.value));
+            const querySnap = await getDocs(q);
+
+            if(querySnap.docs === null){
+                return;
+            }
+
+            console.log('Query Snapshot:', querySnap.docs.map(doc => doc.id));
+
+            querySnap.forEach(async (doc) => {
+                const docRef = doc.ref;
+                await deleteDoc(docRef);
+                console.log('Deleting:', docRef.path);
+            });
+        } catch (error) {
+            console.error("Error updating recipe:", error);
+        }
+    } else {
+        console.warn("RecipeId is null. Cannot remove recipe report.");
+    }
 }
 
 onMounted(() => {

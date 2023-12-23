@@ -1,9 +1,11 @@
 <script setup>
 import { useFirestore } from 'vuefire'
 import { collection, doc, getDoc, where, query, getDocs, deleteDoc } from 'firebase/firestore'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { useStore } from 'vuex';
 import router from '../router'
 
+const store = useStore();
 const db = useFirestore()
 const recipeId = ref(null)
 const recipe = ref(null)
@@ -25,7 +27,6 @@ const fetchRecipe = async () => {
     } else {
       console.error('Recipe not found');
     }
-    
   } catch (error) {
     console.error('Error fetching recipe:', error);
   }
@@ -40,23 +41,38 @@ const removeRecipeReport = async () => {
 
             console.log('Query Snapshot:', querySnap.docs.map(doc => doc.id));
 
-            querySnap.forEach(async (doc) => {
+            // Use Promise.all to wait for all delete operations to complete
+            await Promise.all(querySnap.docs.map(async (doc) => {
                 const docRef = doc.ref;
                 await deleteDoc(docRef);
                 console.log('Deleting:', docRef.path);
-            });
+            }));
+
+            // After all delete operations are complete, update the state
+            store.commit('setDataLoaded', false);
+            console.log("setted as false");
+
+            // Log the current route path and try navigating back
+            console.log('Current Route Path:', router.currentRoute.value.path);
+            router.go(-1);
         } catch (error) {
             console.error("Error updating recipe:", error);
         }
-        router.push({name: 'reportedRecipes'})
     } else {
         console.warn("RecipeId is null. Cannot remove recipe report.");
     }
 }
 
 onMounted(() => {
+  console.log("im mounted")
   fetchRecipe()
-})
+  console.log("im fetched");
+});
+
+onBeforeUnmount(async () => {
+  // Add a delay to ensure that asynchronous operations complete before unmounting
+  await new Promise(resolve => setTimeout(resolve, 100));
+});
 </script>
 
 <template>
