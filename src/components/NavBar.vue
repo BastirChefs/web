@@ -6,7 +6,7 @@
       <RouterLink to="/suggestedIngredients" class="nav-item">Suggested Ingredients</RouterLink>
       <RouterLink to="/recipes" class="nav-item">Recipes</RouterLink>
       <RouterLink to="/reportedRecipes" class="nav-item">Reported Recipes</RouterLink>
-      <button @click="logout" class="nav-item">Logout</button>
+      <button @click="logout" class="nav-item">Logout <IconLogout /> </button>
     </div>
   </nav>
 </template>
@@ -14,6 +14,7 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import { logout } from '../views/LogoutView.vue'
+import IconLogout from './icons/IconLogout.vue';
 </script>
 
 <style scoped>
@@ -23,6 +24,9 @@ import { logout } from '../views/LogoutView.vue'
   align-items: center;
 }
 
+.nav-item:hover {
+  text-decoration: underline;
+}
 .nav-item {
   margin-right: 10px;
   color: white;
@@ -31,6 +35,8 @@ import { logout } from '../views/LogoutView.vue'
 }
 
 button {
-  background-color: black;
+  background-color: transparent;
+  border: none;
+  font-size: inherit;
 }
 </style>
