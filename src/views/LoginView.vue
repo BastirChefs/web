@@ -57,6 +57,7 @@ const loginWithGoogle = () => {
   font-size: 30px;
   font-weight: bold;
   margin-bottom: 20px;
+  text-align: center;
 }
 .user-form {
   display: flex;
