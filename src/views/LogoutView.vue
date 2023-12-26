@@ -1,10 +1,9 @@
-<script setup>
+<script>
 import { getAuth, signOut } from 'firebase/auth'
 import router from '../router'
-const auth = getAuth()
 
 const logout = () => {
-  signOut(auth)
+  signOut(getAuth())
     .then(() => {
         router.push('/login')
         console.log('Success')
@@ -13,6 +12,11 @@ const logout = () => {
       console.log(error)
     })
 }
+export { logout }
+</script>
+
+<script setup>
+
 
 import { onBeforeMount } from 'vue'
 onBeforeMount(() => {

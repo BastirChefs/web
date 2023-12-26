@@ -1,8 +1,9 @@
 <script setup>
-import Navbar from '../components/Navbar.vue';
+import Navbar from '@/components/Navbar.vue';
+
 </script>
 <template>
-  <Navbar/>
+  <Navbar />
   <h1>
     Welcome to the BastirChef Admin Panel!
   </h1>

@@ -18,9 +18,8 @@
   <script setup>
   import { ref } from 'vue'
   import { useRouter } from 'vue-router'
-  import { getAuth, signOut } from 'firebase/auth'
   import { RouterLink } from 'vue-router';
-  
+  import { logout } from '../views/LogoutView.vue'
   const isAuthenticated = ref(true)
   const router = useRouter()
   
@@ -28,15 +27,6 @@
     router.push('/login')
   }
   
-  const logout = async () => {
-    try {
-      await signOut(getAuth())
-      isAuthenticated.value = false
-      router.push('/login')
-    } catch (error) {
-      console.error('Error during logout:', error)
-    }
-  }
   
   </script>
   
