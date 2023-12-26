@@ -1,18 +1,14 @@
 <script setup>
 import IconSupport from './icons/IconSupport.vue';
 import NavBar from './NavBar.vue';
-import { ref } from 'vue';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-const isAuthenticated = ref(getAuth().currentUser !== null);
-onAuthStateChanged(getAuth(), (user) => {
-    isAuthenticated.value = user !== null;
-});
+import { useUserStore } from '@/stores/user';
+const userStore = useUserStore();
 </script>
 
 <template>
     <div id="header-container">
         <IconSupport />
-        <NavBar v-if="isAuthenticated" /> 
+        <NavBar v-if="userStore.isAuthenticated" /> 
     </div>
     
 </template>
