@@ -20,3 +20,40 @@ a,
     background-color: hsla(160, 100%, 37%, 0.2);
   }
 }
+
+.user-form-info {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.user-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.user-input-container input {
+  width: 300px;
+  height: 30px;
+}
+
+.user-button {
+  height: 30px;
+  width: 300px;
+  text-align: center;
+}
+
+.user-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
