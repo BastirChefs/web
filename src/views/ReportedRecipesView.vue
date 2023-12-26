@@ -2,7 +2,6 @@
 import { useCollection, useFirestore } from 'vuefire'
 import { collection, doc, getDoc } from 'firebase/firestore'
 import router from '../router'
-import Navbar from '../components/Navbar.vue';
 import { ref, onMounted, onUnmounted, watchEffect } from 'vue';
 import { useStore } from 'vuex';
 
@@ -69,7 +68,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <Navbar/>
   <ul>
     <li v-for="recipe in recipesWithNames" :key="recipe.id">
         <div>
