@@ -17,15 +17,10 @@ import { logout } from '../views/LogoutView.vue'
 </script>
 
 <style scoped>
-nav {
-  background-color: #cb5e11;
-  color: white;
-  padding: 10px;
-}
-
 .nav-container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .nav-item {

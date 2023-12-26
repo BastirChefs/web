@@ -1,6 +1,6 @@
 <script setup>
 import IconSupport from './icons/IconSupport.vue';
-import Navbar from './Navbar.vue';
+import NavBar from './NavBar.vue';
 import { ref } from 'vue';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 const isAuthenticated = ref(getAuth().currentUser !== null);
@@ -12,7 +12,7 @@ onAuthStateChanged(getAuth(), (user) => {
 <template>
     <div id="header-container">
         <IconSupport />
-        <Navbar v-if="isAuthenticated" /> 
+        <NavBar v-if="isAuthenticated" /> 
     </div>
     
 </template>
@@ -25,5 +25,6 @@ onAuthStateChanged(getAuth(), (user) => {
     background-color: #cb5e11;
     color: white;
     padding: 10px;
+    height: 8vh;
 }
 </style>
