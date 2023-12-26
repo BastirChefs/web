@@ -33,21 +33,23 @@ const registerWithGoogle = () => {
 }
 </script>
 <template>
-  <div class="user-form-info">Register</div>
+  <div class="user-form-container">
+    <div class="user-form-info">Register</div>
 
-  <div class="user-form">
-    <div class="user-input-container">
-      <label for="email">Email</label>
-      <input type="email" placeholder="Email" v-model="email" />
+    <div class="user-form">
+      <div class="user-input-container">
+        <label for="email">Email</label>
+        <input type="email" placeholder="Email" v-model="email" />
+      </div>
+      <div class="user-input-container">
+        <label for="password">Password</label>
+        <input type="password" placeholder="Password" v-model="password" />
+      </div>
+      <div class="user-buttons">
+        <button @click="register" class="user-button">Register</button>
+        <button @click="registerWithGoogle" class="user-button">Register with Google</button>
+      </div>
+      <div><RouterLink to="/login">Already have an account?</RouterLink></div>
     </div>
-    <div class="user-input-container">
-      <label for="password">Password</label>
-      <input type="password" placeholder="Password" v-model="password" />
-    </div>
-    <div class="user-buttons">
-      <button @click="register" class="user-button">Register</button>
-      <button @click="registerWithGoogle" class="user-button">Register with Google</button>
-    </div>
-    <div><RouterLink to="/login">Already have an account?</RouterLink></div>
   </div>
 </template>
