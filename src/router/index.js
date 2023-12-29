@@ -96,6 +96,19 @@ const router = createRouter({
       props: route => ({ id: route.params.id }),
       meta: { requiresAuth: true }
     },
+    {
+      path: '/reportedUsers',
+      name: 'reportedUsers',
+      component: () => import('../views/ReportedUsersView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/reportedUsers/details/:id',
+      name: 'reportedUsers/details',
+      component: () => import('../views/ReportedUserDetailsView.vue'),
+      props: route => ({ id: route.params.id }),
+      meta: { requiresAuth: true }
+    },
   ]
 })
 

@@ -6,6 +6,7 @@
       <RouterLink to="/suggestedIngredients" class="nav-item">Suggested Ingredients</RouterLink>
       <RouterLink to="/recipes" class="nav-item">Recipes</RouterLink>
       <RouterLink to="/reportedRecipes" class="nav-item">Reported Recipes</RouterLink>
+      <RouterLink to="/reportedUsers" class="nav-item">Reported Users</RouterLink>
       <button @click="logout" class="nav-item">Logout <IconLogout /> </button>
     </div>
   </nav>
