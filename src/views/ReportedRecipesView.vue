@@ -68,17 +68,25 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <ul>
-    <li v-for="recipe in recipesWithNames" :key="recipe.id">
-        <div>
-            {{ recipe.recipeName || 'Recipe Name Not Available' }}
-        </div>
+    <table>
+    <tr>
+      <th>Recipe Name</th>
+      <th>Actions</th>
+    </tr>
+    <tr v-for="recipe in recipesWithNames" :key="recipe.id">
+      <td>{{ recipe.recipeName }}</td>
+      <td>
         <button @click="deleteRecipe(recipe.recipeId)">
             Delete
         </button>
         <button @click="removeSuggestion(recipe.recipeId)">
             Remove
         </button>
-    </li>
-  </ul>
+      </td>
+    </tr>
+    <tr>
+      <th>Recipe Name</th>
+      <th>Actions</th>
+    </tr>
+  </table>
 </template>
