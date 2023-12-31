@@ -2,6 +2,7 @@
 import { useFirestore } from 'vuefire'
 import { where, query, collection, getDocs } from 'firebase/firestore'
 import { useRouter } from 'vue-router'
+import { getAuth } from 'firebase/auth';
 const router = useRouter()
 const db = useFirestore()
 const usersRef = collection(db, 'users')
@@ -22,9 +23,17 @@ const viewUserRecipes = (id) => {
   router.push({ name: 'recipes', params: { id } })
 }
 
-const removeUser = (id) => {
-  console.log(id)
+const auth = getAuth();
+const disableUser = async (id) => {
+  await auth.updateUser(id, {
+    disabled: true
+  });
 }
+
+const deleteUser = async (id) => {
+  await auth.deleteUser(id);
+}
+
 </script>
 
 <template>
@@ -48,7 +57,8 @@ const removeUser = (id) => {
         <td>{{ user.recipes }}</td>
         <td>
           <button @click="viewUserRecipes(user.id)">View</button
-          ><button @click="removeUser(user.id)">Remove</button>
+          ><button @click="disableUser(user.id)">Remove</button>
+          <button @click="deleteUser(user.id)">Remove</button>
         </td>
       </tr>
     </tbody>
