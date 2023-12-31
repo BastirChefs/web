@@ -57,8 +57,8 @@ const deleteUser = async (id) => {
         <td>{{ user.recipes }}</td>
         <td>
           <button @click="viewUserRecipes(user.id)">View</button
-          ><button @click="disableUser(user.id)">Remove</button>
-          <button @click="deleteUser(user.id)">Remove</button>
+          ><button @click="disableUser(user.id)">Disable</button>
+          <button @click="deleteUser(user.id)">Delete</button>
         </td>
       </tr>
     </tbody>
