@@ -43,13 +43,6 @@ const router = createRouter({
       meta: { requiresAuth: true }
     },
     {
-      path: '/recipes/delete/:id',
-      name: 'recipes/delete',
-      component: () => import('../views/RecipesDeleteView.vue'),
-      props: (route) => ({ id: route.params.id }),
-      meta: { requiresAuth: true }
-    },
-    {
       path: '/reportedRecipes',
       name: 'reportedRecipes',
       component: () => import('../views/ReportedRecipesView.vue'),
