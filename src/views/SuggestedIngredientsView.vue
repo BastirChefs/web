@@ -1,28 +1,54 @@
 <script setup>
 import { useCollection, useFirestore } from 'vuefire'
-import { collection, doc, addDoc, deleteDoc  } from 'firebase/firestore'
-import router from '../router'
+import { collection, doc, addDoc, deleteDoc, updateDoc } from 'firebase/firestore'
+import EditModal from '@/components/EditModal.vue';
+import { ref } from 'vue';
 const db = useFirestore()
-const ingredients = useCollection(collection(db, 'suggested-ingredients'))
-const addIngredient = (id) => {
-  router.push({ name: 'suggestedIngredients/add', params: { id: id } })
+const suggestedIngredientsCollection = collection(db, 'suggested-ingredients')
+const ingredients = useCollection(suggestedIngredientsCollection)
+
+const open = ref(false)
+const currentlyEditingIngredient = ref(null)
+const editSuggestedIngredient = (choosenIngredient) => {
+  currentlyEditingIngredient.value = choosenIngredient
+  open.value = true
+} 
+
+const saveAction = async (ingredient) => {
+  await updateDoc(doc(suggestedIngredientsCollection, ingredient.id), {
+    name: ingredient.name,
+    unit: ingredient.unit
+  })
+  open.value = false
 }
-const removeSuggestion = (id) => {
-  router.push({ name: 'suggestedIngredients/remove', params: { id: id } })
+
+const removeSuggestedIngredient = (id) => {
+  if (confirm('Are you sure you want to remove this suggestion?')) {
+    const ingredientDoc = doc(suggestedIngredientsCollection, id)
+    deleteDoc(ingredientDoc)
+  }
 }
-const directAddIngredient = async (name, unit, id) => {
-    try {
-        const ingredientsCollection = collection(db, 'ingredients');
-        await addDoc(ingredientsCollection, {name: name, unit: unit});
-        const suggestedIngredientsCollection = collection(db, 'suggested-ingredients');
-        const ingredientDoc = doc(suggestedIngredientsCollection, id);
-        await deleteDoc(ingredientDoc);
-    } catch (error) {
-        console.error("Error updating ingredient:", error);
-    }
+const addSuggestedIngredient = async (name, unit, id) => {
+  if (confirm('Are you sure you want to add this ingredient?')) {
+    const ingredientsCollection = collection(db, 'ingredients')
+    await addDoc(ingredientsCollection, { name: name, unit: unit })
+    const ingredientDoc = doc(suggestedIngredientsCollection, id)
+    await deleteDoc(ingredientDoc)
+  }
 }
+
+const closeAction = () => {
+  open.value = false
+}
+
 </script>
 <template>
+  <EditModal
+    v-if="open"
+    :data="currentlyEditingIngredient"
+    @close="closeAction"
+    @save="saveAction(currentlyEditingIngredient)"
+  />
   <table>
     <tr>
       <th>Ingredient Name</th>
@@ -33,9 +59,11 @@ const directAddIngredient = async (name, unit, id) => {
       <td>{{ ingredient.name }}</td>
       <td>{{ ingredient.unit }}</td>
       <td>
-        <button @click="directAddIngredient(ingredient.name, ingredient.unit, ingredient.id)">Add</button>
-        <button @click="addIngredient(ingredient.id)">Edit</button>
-        <button @click="removeSuggestion(ingredient.id)">Remove</button>
+        <button @click="addSuggestedIngredient(ingredient.name, ingredient.unit, ingredient.id)">
+          Add
+        </button>
+        <button @click="editSuggestedIngredient(ingredient)">Edit</button>
+        <button @click="removeSuggestedIngredient(ingredient.id)">Remove</button>
       </td>
     </tr>
     <tr>

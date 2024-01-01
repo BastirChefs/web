@@ -30,30 +30,9 @@ const router = createRouter({
       meta: { requiresAuth: true }
     },
     {
-      path: '/ingredients/edit/:id',
-      name: 'ingredients/edit',
-      component: () => import('../views/IngredientsEditView.vue'),
-      props: (route) => ({ id: route.params.id }),
-      meta: { requiresAuth: true }
-    },
-    {
       path: '/suggestedIngredients',
       name: 'suggestedIngredients',
       component: () => import('../views/SuggestedIngredientsView.vue'),
-      meta: { requiresAuth: true }
-    },
-    {
-      path: '/suggestedIngredients/add/:id',
-      name: 'suggestedIngredients/add',
-      component: () => import('../views/SuggestedIngredientsAddView.vue'),
-      props: (route) => ({ id: route.params.id }),
-      meta: { requiresAuth: true }
-    },
-    {
-      path: '/suggestedIngredients/remove/:id',
-      name: 'suggestedIngredients/remove',
-      component: () => import('../views/SuggestedIngredientsRemoveView.vue'),
-      props: (route) => ({ id: route.params.id }),
       meta: { requiresAuth: true }
     },
     {
