@@ -29,6 +29,14 @@ const saveAction = async (ingredient) => {
     })
     open.value = false
 }
+
+const verifyIngredient = async (id) => {
+    if(confirm('Are you sure you want to verify this ingredient?')){
+        await updateDoc(doc(ingredientsCollection, id), {
+            isVerified: true
+        })
+    }
+}
 </script>
 <template>
     <EditModal v-if="open" :data="currentlyEditingIngredient" @close="closeAction" @save="saveAction(currentlyEditingIngredient)"/>
@@ -36,11 +44,13 @@ const saveAction = async (ingredient) => {
         <tr>
             <th>Ingredient Name</th>
             <th>Unit</th>
+            <th>Is Verified?</th>
             <th>Actions</th>
         </tr>
         <tr v-for="ingredient in ingredients" :key="ingredient.id">
             <td>{{ ingredient.name }}</td>
             <td>{{ ingredient.unit }}</td>
+            <td>{{ !(ingredient.isVerified === false) }}</td>
             <td>
                 <button @click="editIngredient(ingredient)">
                     Edit
@@ -48,11 +58,13 @@ const saveAction = async (ingredient) => {
                 <button @click="deleteIngredient(ingredient.id)">
                     Delete
                 </button>
+                <button v-if="(ingredient.isVerified === false)" @click="verifyIngredient(ingredient.id)">Verify</button>
             </td>
         </tr>
         <tr>
             <th>Ingredient Name</th>
             <th>Unit</th>
+            <th>Is Verified?</th>
             <th>Actions</th>
         </tr>
     </table>
