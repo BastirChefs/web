@@ -1,15 +1,20 @@
 <script setup>
 import { useCollection, useFirestore } from 'vuefire'
-import { collection } from 'firebase/firestore'
+import { collection, doc, deleteDoc } from 'firebase/firestore'
 import router from '../router'
 const db = useFirestore()
-const ingredients = useCollection(collection(db, 'ingredients'))
+const ingredientsCollection = collection(db, 'ingredients')
+const ingredients = useCollection(ingredientsCollection)
 const editIngredient = (id) => {
     router.push({name: 'ingredients/edit', params: {id: id}})
 }
-const deleteIngredient = (id) => {
-    router.push({name: 'ingredients/delete', params: {id: id}})
+const deleteIngredient = async (id) => {
+    if(confirm('Are you sure you want to delete this ingredient?')){
+       await deleteDoc(doc(ingredientsCollection, id))
+    }
 }
+
+
 </script>
 <template>
     <table>
