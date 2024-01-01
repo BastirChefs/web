@@ -1,12 +1,16 @@
 <script setup>
 import { useCollection, useFirestore } from 'vuefire'
-import { collection, doc, deleteDoc } from 'firebase/firestore'
-import router from '../router'
+import { collection, doc, deleteDoc, updateDoc } from 'firebase/firestore'
+import EditModal from '../components/EditModal.vue'
+import {ref} from 'vue'
 const db = useFirestore()
 const ingredientsCollection = collection(db, 'ingredients')
 const ingredients = useCollection(ingredientsCollection)
-const editIngredient = (id) => {
-    router.push({name: 'ingredients/edit', params: {id: id}})
+const open = ref(false)
+const currentlyEditingIngredient = ref(null)
+const editIngredient = (choosenIngredient) => {
+    currentlyEditingIngredient.value = choosenIngredient
+    open.value = true
 }
 const deleteIngredient = async (id) => {
     if(confirm('Are you sure you want to delete this ingredient?')){
@@ -14,9 +18,20 @@ const deleteIngredient = async (id) => {
     }
 }
 
+const closeAction = () => {
+    open.value = false
+}
 
+const saveAction = async (ingredient) => {
+    await updateDoc(doc(ingredientsCollection, ingredient.id), {
+        name: ingredient.name,
+        unit: ingredient.unit
+    })
+    open.value = false
+}
 </script>
 <template>
+    <EditModal v-if="open" :data="currentlyEditingIngredient" @close="closeAction" @save="saveAction(currentlyEditingIngredient)"/>
     <table>
         <tr>
             <th>Ingredient Name</th>
@@ -27,7 +42,7 @@ const deleteIngredient = async (id) => {
             <td>{{ ingredient.name }}</td>
             <td>{{ ingredient.unit }}</td>
             <td>
-                <button @click="editIngredient(ingredient.id)">
+                <button @click="editIngredient(ingredient)">
                     Edit
                 </button>
                 <button @click="deleteIngredient(ingredient.id)">
