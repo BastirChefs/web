@@ -1,17 +1,12 @@
 <script setup>
 import { useFirestore } from 'vuefire'
-import { collection, query, where, getDocs } from 'firebase/firestore'
+import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore'
 import { useRouter } from 'vue-router'
 import IconSupport from './icons/IconSupport.vue'
 import { ref } from 'vue'
 const db = useFirestore()
 const router = useRouter()
-const deleteRecipe = (id) => {
-  router.push({ name: 'recipes/delete', params: { id: id } })
-}
-console.log('hello there')
 const recipes = ref([])
-
 const id = router.currentRoute.value.params.id
 const recipesCollection = collection(db, 'recipes')
 let q = null
@@ -20,11 +15,31 @@ if (id !== '') {
 } else {
   q = query(recipesCollection)
 }
-const querySnap = await getDocs(q)
-querySnap.docs.map((doc) => doc.id)
-querySnap.forEach(async (doc) => {
-  recipes.value.push(doc.data())
-})
+
+const refreshData = async () => {
+  recipes.value = []
+  const querySnap = await getDocs(q)
+  querySnap.forEach((doc) => {
+    const docData = doc.data()
+    recipes.value.push({
+      id: doc.id,
+      userId: docData.userId,
+      recipeName: docData.recipeName,
+      recipeText: docData.recipeText,
+      timeCreated: docData.timeCreated
+    })
+  })
+}
+
+refreshData()
+
+const deleteRecipe = async (id) =>  {
+  if (confirm('Are you sure you want to delete this recipe?')) {
+    await deleteDoc(doc(recipesCollection, id))
+    await deleteDoc(doc(collection(db, 'reported-recipes'), id))
+  }
+  refreshData()
+}
 </script>
 
 <template>
