@@ -1,9 +1,10 @@
 <script setup>
-import { useFirestore } from 'vuefire'
-import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore'
+import { useCollection, useDocument, useFirestore } from 'vuefire'
+import { collection, query, where, getDocs, deleteDoc, doc, getDoc } from 'firebase/firestore'
 import { useRouter } from 'vue-router'
 import IconSupport from './icons/IconSupport.vue'
 import { ref } from 'vue'
+
 const db = useFirestore()
 const router = useRouter()
 const recipes = ref([])
@@ -19,15 +20,25 @@ if (id !== '') {
 const refreshData = async () => {
   recipes.value = []
   const querySnap = await getDocs(q)
-  querySnap.forEach((doc) => {
-    const docData = doc.data()
-    recipes.value.push({
-      id: doc.id,
+  
+  querySnap.forEach(async (recipe) => {
+    const userId = recipe.data().userId
+    const user = await getDoc(doc(db, 'users', userId))
+    const docData = recipe.data()
+    const object = {
+      id: recipe.id,
       userId: docData.userId,
       recipeName: docData.recipeName,
       recipeText: docData.recipeText,
-      timeCreated: docData.timeCreated
-    })
+      timeCreated: docData.timeCreated,
+    }
+    const userData = user.data()
+    if(userData !== undefined){
+      object.userImage = userData.userImage
+      object.username = userData.username
+    }
+    
+    recipes.value.push(object)
   })
 }
 
@@ -46,6 +57,7 @@ const deleteRecipe = async (id) =>  {
   <table>
     <tr>
       <th>User Image</th>
+      <th>User Name</th>
       <th>User Id</th>
       <th>Recipe Name</th>
       <th>Recipe Text</th>
@@ -53,7 +65,8 @@ const deleteRecipe = async (id) =>  {
       <th>Actions</th>
     </tr>
     <tr v-for="recipe in recipes" :key="recipe.id">
-      <td><IconSupport /></td>
+      <td><img :src="recipe.userImage" alt="User Image" width="100" height="100"></td>
+      <td>{{ recipe.username }}</td>
       <td>{{ recipe.userId }}</td>
       <td>{{ recipe.recipeName }}</td>
       <td>{{ recipe.recipeText }}</td>
@@ -64,6 +77,7 @@ const deleteRecipe = async (id) =>  {
     </tr>
     <tr>
       <th>User Image</th>
+      <th>User Name</th>
       <th>User Id</th>
       <th>Recipe Name</th>
       <th>Recipe Text</th>
