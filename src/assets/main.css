@@ -83,3 +83,10 @@ th {
 td {
   color: var(--vt-c-text-dark-1);
 }
+
+button {
+  background-color: #cb5e11;
+  margin: 5px;
+  border-radius: 3px;
+  border: 1px solid #cb5e11;
+}
