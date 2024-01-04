@@ -1,16 +1,23 @@
 <script setup>
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { useFirestore } from 'vuefire'
 const provider = new GoogleAuthProvider()
 import { ref } from 'vue'
-import router from '../router'
+import { useRouter } from 'vue-router'
+import { doc, setDoc } from 'firebase/firestore';
 const email = ref('')
 const password = ref('')
+const db = useFirestore()
+const router = useRouter()
 const register = () => {
   createUserWithEmailAndPassword(getAuth(), email.value, password.value)
-    .then((data) => {
-      console.log('Success')
-      console.log(data)
+    .then(async (data) => {
+      await setDoc(doc(db, 'users', data.user.uid), {
+        email: email.value,
+        isAdmin: true,
+        createdAt: new Date().toJSON(),
+      })
       router.push('/')
     })
     .catch((error) => {
@@ -21,9 +28,11 @@ const register = () => {
 
 const registerWithGoogle = () => {
   signInWithPopup(getAuth(), provider)
-    .then((data) => {
-      console.log('Success')
-      console.log(data)
+    .then(async (data) => {
+      await setDoc(doc(db, 'users', data.user.uid), {
+        isAdmin: true,
+        createdAt: new Date().toJSON(),
+      })
       router.push('/')
     })
     .catch((error) => {
