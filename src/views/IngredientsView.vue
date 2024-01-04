@@ -1,11 +1,12 @@
 <script setup>
 import { useCollection, useFirestore } from 'vuefire'
-import { collection, doc, deleteDoc, updateDoc } from 'firebase/firestore'
+import { collection, doc, deleteDoc, updateDoc, query, where } from 'firebase/firestore'
 import EditModal from '../components/EditModal.vue'
 import {ref} from 'vue'
 const db = useFirestore()
 const ingredientsCollection = collection(db, 'ingredients')
-const ingredients = useCollection(ingredientsCollection)
+const q = query(ingredientsCollection, where('isVerified', '!=', false))
+const ingredients = useCollection(q)
 const open = ref(false)
 const currentlyEditingIngredient = ref(null)
 const editIngredient = (choosenIngredient) => {
