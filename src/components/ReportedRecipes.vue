@@ -12,7 +12,7 @@ const refreshRecipes = async () => {
   recipes.value = []
   for (const doc of querySnap.docs) {
     const docData = doc.data()
-    recipes.value.push({
+        recipes.value.push({
       recipeId: doc.id,
       recipeName: docData.recipeName,
       recipeText: docData.recipeText,
@@ -25,7 +25,9 @@ const refreshRecipes = async () => {
 refreshRecipes()
 
 const deleteRecipe = async (id) => {
-  await deleteDoc(doc(recipesCollection, id))
+  if (confirm('Are you sure you want to delete this recipe?')) {
+    await deleteDoc(doc(recipesCollection, id))
+  }
 }
 
 const removeReportFlag = async (id) => {
