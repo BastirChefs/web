@@ -1,8 +1,7 @@
 <script setup>
-import { useCollection, useDocument, useFirestore } from 'vuefire'
+import { useFirestore } from 'vuefire'
 import { collection, query, where, getDocs, deleteDoc, doc, getDoc } from 'firebase/firestore'
 import { useRouter } from 'vue-router'
-import IconSupport from './icons/IconSupport.vue'
 import { ref } from 'vue'
 
 const db = useFirestore()
