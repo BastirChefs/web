@@ -7,7 +7,7 @@ console.log(props.data)
 <template>
 <Teleport to="body">
   <div class="modal">
-    <div v-for="(value, key) in data" :key="key">
+    <div v-for="(value, key) in data" :key="key" style="display: flex; justify-content: space-between;">
         <label>{{ key }}</label>
         <input type="text" v-model="data[key]"/>
     </div>
@@ -29,6 +29,11 @@ console.log(props.data)
   border-radius: 10px;
 
   margin-left: -150px;
-    background: var(--vt-c-black);
+  background: var(--vt-c-black);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 5px;
+
 }
 </style>

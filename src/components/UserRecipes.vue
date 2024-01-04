@@ -54,7 +54,8 @@ const deleteRecipe = async (id) =>  {
 </script>
 
 <template>
-  <table>
+  <div style="overflow-y:auto; height: 700px;">
+    <table>
     <tr>
       <th>User Image</th>
       <th>User Name</th>
@@ -75,14 +76,7 @@ const deleteRecipe = async (id) =>  {
         <button @click="deleteRecipe(recipe.id)">Delete</button>
       </td>
     </tr>
-    <tr>
-      <th>User Image</th>
-      <th>User Name</th>
-      <th>Recipe Image</th>
-      <th>Recipe Name</th>
-      <th>Recipe Text</th>
-      <th>Time Created</th>
-      <th>Actions</th>
-    </tr>
   </table>
+  </div>
+
 </template>

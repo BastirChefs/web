@@ -12,7 +12,7 @@ const refreshRecipes = async () => {
   recipes.value = []
   for (const doc of querySnap.docs) {
     const docData = doc.data()
-        recipes.value.push({
+    recipes.value.push({
       recipeId: doc.id,
       recipeName: docData.recipeName,
       recipeText: docData.recipeText,
@@ -41,30 +41,27 @@ const removeReportFlag = async (id) => {
 </script>
 
 <template>
-  <table>
-    <tr>
-      <th>Recipe Name</th>
-      <th>Recipe Text</th>
-      <th>Time Created</th>
-      <th>User Id</th>
-      <th>Actions</th>
-    </tr>
-    <tr v-for="recipe in recipes" :key="recipe.id">
-      <td>{{ recipe.recipeName }}</td>
-      <td>{{ recipe.recipeText }}</td>
-      <td>{{ recipe.timeCreated }}</td>
-      <td>{{ recipe.userId }}</td>
-      <td>
-        <button @click="deleteRecipe(recipe.recipeId)">Delete</button>
-        <button @click="removeReportFlag(recipe.recipeId)">Remove</button>
-      </td>
-    </tr>
-    <tr>
-      <th>Recipe Name</th>
-      <th>Recipe Text</th>
-      <th>Time Created</th>
-      <th>User Id</th>
-      <th>Actions</th>
-    </tr>
-  </table>
+  <div style="overflow-y: auto; height: 700px">
+    <table>
+      <tr>
+        <th>Recipe Name</th>
+        <th>Recipe Text</th>
+        <th>Time Created</th>
+        <th>User Id</th>
+        <th>Actions</th>
+      </tr>
+      <tr v-for="recipe in recipes" :key="recipe.id">
+        <td>{{ recipe.recipeName }}</td>
+        <td>
+          <div style="overflow-y: auto; height: 100px">{{ recipe.recipeText }}</div>
+        </td>
+        <td>{{ recipe.timeCreated }}</td>
+        <td>{{ recipe.userId }}</td>
+        <td>
+          <button @click="deleteRecipe(recipe.recipeId)">Delete</button>
+          <button @click="removeReportFlag(recipe.recipeId)">Remove</button>
+        </td>
+      </tr>
+    </table>
+  </div>
 </template>

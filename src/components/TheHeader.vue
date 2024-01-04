@@ -18,7 +18,7 @@ const userStore = useUserStore();
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #cb5e11;
+    background-color: var(--vt-c-bastirchef-orange);
     color: white;
     padding: 10px;
     height: 8vh;
