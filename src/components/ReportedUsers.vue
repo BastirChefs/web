@@ -16,7 +16,7 @@ querySnap.forEach((doc) => {
     username: docData.username,
     email: docData.email,
     created_at: docData.created_at,
-    recipes: docData.recipes
+    userImage: docData.userImage
   })
 })
 const viewUserRecipes = (id) => {
@@ -40,6 +40,7 @@ const deleteUser = async (id) => {
   <table>
     <thead>
       <tr>
+        <th>User Image</th>
         <th>User Id</th>
         <th>Username</th>
         <th>Email</th>
@@ -50,20 +51,22 @@ const deleteUser = async (id) => {
     </thead>
     <tbody>
       <tr v-for="user in reportedUsers" :key="user.id">
+        <td> <img :src="user.userImage" alt="User Image" width="100" height="100"></td>
         <td>{{ user.id }}</td>
         <td>{{ user.username }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.created_at }}</td>
-        <td>{{ user.recipes }}</td>
+        <td><button @click="viewUserRecipes(user.id)">View</button
+          ></td>
         <td>
-          <button @click="viewUserRecipes(user.id)">View</button
-          ><button @click="disableUser(user.id)">Disable</button>
+          <button @click="disableUser(user.id)">Disable</button>
           <button @click="deleteUser(user.id)">Delete</button>
         </td>
       </tr>
     </tbody>
     <thead>
       <tr>
+        <th>User Image</th>
         <th>User Id</th>
         <th>Username</th>
         <th>Email</th>
