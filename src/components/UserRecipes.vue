@@ -30,6 +30,7 @@ const refreshData = async () => {
       recipeName: docData.recipeName,
       recipeText: docData.recipeText,
       timeCreated: docData.timeCreated,
+      recipeImage: docData.image
     }
     const userData = user.data()
     if(userData !== undefined){
@@ -57,7 +58,7 @@ const deleteRecipe = async (id) =>  {
     <tr>
       <th>User Image</th>
       <th>User Name</th>
-      <th>User Id</th>
+      <th>Recipe Image</th>
       <th>Recipe Name</th>
       <th>Recipe Text</th>
       <th>Time Created</th>
@@ -66,9 +67,9 @@ const deleteRecipe = async (id) =>  {
     <tr v-for="recipe in recipes" :key="recipe.id">
       <td><img :src="recipe.userImage" alt="User Image" width="100" height="100"></td>
       <td>{{ recipe.username }}</td>
-      <td>{{ recipe.userId }}</td>
+      <td><img :src="recipe.recipeImage" alt="Recipe Image" width="100" height="100"></td>
       <td>{{ recipe.recipeName }}</td>
-      <td>{{ recipe.recipeText }}</td>
+      <td><div style="height:100px; overflow:auto">{{ recipe.recipeText }}</div></td>
       <td>{{ recipe.timeCreated }}</td>
       <td>
         <button @click="deleteRecipe(recipe.id)">Delete</button>
@@ -77,7 +78,7 @@ const deleteRecipe = async (id) =>  {
     <tr>
       <th>User Image</th>
       <th>User Name</th>
-      <th>User Id</th>
+      <th>Recipe Image</th>
       <th>Recipe Name</th>
       <th>Recipe Text</th>
       <th>Time Created</th>
